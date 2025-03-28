@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "357658193837",
+    "project_id": "kottrip",
+    "storage_bucket": "kottrip.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357658193837:android:2f5deac9f88313b1947b24",
+        "android_client_info": {
+          "package_name": "com.example.kot_trip"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTVA9H3oMgcoX5pGi2-x3pxHL8hWhqRj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
