@@ -57,16 +57,6 @@ class LoginFragment : Fragment() {
             binding.btnLogin.isEnabled = !isLoading
         }
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-
-        binding.btnGoogleSignIn.setOnClickListener() {
-            // Handle Google Sign-In
-            val signInIntent = googleSignInClient.signInIntent
-            startActivityForResult(signInIntent, RC_SIGN_IN)
-        }
 
 
         return binding.root
