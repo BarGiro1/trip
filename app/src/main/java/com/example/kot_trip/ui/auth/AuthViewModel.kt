@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.kot_trip.base.App
 import com.example.kot_trip.data.repository.UserRepository
 import kotlinx.coroutines.launch
 
@@ -23,6 +24,7 @@ class AuthViewModel(private val repository: UserRepository) : ViewModel() {
         _loading.value = true
         repository.loginUser(email, password,
             onSuccess = {
+                App.Globals.userId = it.id
                 _loginSuccess.postValue(true)
                 _loading.postValue(false)
             },

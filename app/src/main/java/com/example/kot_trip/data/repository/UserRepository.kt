@@ -18,17 +18,16 @@ class UserRepository(private val context: Context) {
 
     fun getCachedUser(userId: String): LiveData<User?> = userDao.getUserLive(userId)
 
-    fun fetchUserFromFirebase(userId: String) {
+    fun getUserProfile(userId: String, onSuccess: (User) -> Unit, onFailure: (Exception) -> Unit) {
         FirebaseModel.getUserById(
             userId,
             onSuccess = { user ->
                 CoroutineScope(Dispatchers.IO).launch {
                     userDao.insert(user)
                 }
+                onSuccess(user)
             },
-            onFailure = {
-                Toast.makeText(context, "שגיאה בטעינת משתמש", Toast.LENGTH_SHORT).show()
-            }
+            onFailure = { onFailure(it) }
         )
     }
 
@@ -96,6 +95,7 @@ class UserRepository(private val context: Context) {
             onFailure = { onFailure(it) }
         )
     }
+
     fun logoutUser(onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         FirebaseModel.logoutUser(
             onSuccess = {
