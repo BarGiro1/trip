@@ -36,18 +36,7 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
 
     fun updateUserProfile(user: User) {
         viewModelScope.launch {
-            userRepository.updateUserProfile(user)
             _user.postValue(user)
-        }
-    }
-
-    fun updateUserProfileImage(profileImageUri: String) {
-        viewModelScope.launch {
-            val updatedUser = user.value?.copy(profileImageUri = profileImageUri)
-            if (updatedUser != null) {
-                userRepository.updateUserProfile(updatedUser)
-                _user.postValue(updatedUser)
-            }
         }
     }
 }
