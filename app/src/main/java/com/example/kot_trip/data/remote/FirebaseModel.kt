@@ -24,6 +24,32 @@ object FirebaseModel {
 
         database.firestoreSettings = setting
     }
+
+
+    fun googleSignIn(token: String, onSuccess: (User) -> Unit, onFailure: (Exception) -> Unit) {
+        val credential = com.google.firebase.auth.GoogleAuthProvider.getCredential(token, null)
+        val auth = com.google.firebase.auth.FirebaseAuth.getInstance()
+
+        auth.signInWithCredential(credential)
+            .addOnSuccessListener { authResult ->
+                val firebaseUser = authResult.user
+                if (firebaseUser != null) {
+                    val user = User(
+                        id = firebaseUser.uid,
+                        name = firebaseUser.displayName ?: "",
+                        email = firebaseUser.email ?: "",
+                        profileImageUrl = firebaseUser.photoUrl?.toString() ?: ""
+                    )
+                    onSuccess(user)
+                } else {
+                    onFailure(Exception("User is null"))
+                }
+            }
+            .addOnFailureListener { e ->
+                onFailure(e)
+            }
+    }
+
     fun addPost(post: Post, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         db.collection("posts")
             .document(post.id)

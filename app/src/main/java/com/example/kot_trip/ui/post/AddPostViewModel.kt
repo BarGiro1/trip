@@ -24,7 +24,7 @@ class AddPostViewModel(application: Application) : AndroidViewModel(application)
         description: String,
         city: String,
         country: String,
-        userId: String = "demo_user", // בשלב מאוחר - מ-FirebaseAuth
+        userId: String,
         imageBitmap: Bitmap?
     ) {
         if (title.isBlank() || description.isBlank() || city.isBlank() || country.isBlank()) {

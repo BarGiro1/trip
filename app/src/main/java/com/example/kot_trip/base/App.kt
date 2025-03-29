@@ -7,6 +7,7 @@ class App: Application() {
 
     object Globals {
         var context: Context? = null
+        var userId: String? = null
     }
     override fun onCreate() {
         super.onCreate()

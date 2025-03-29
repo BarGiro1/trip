@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.kot_trip.base.App
 import com.example.kot_trip.base.Countries
 import com.example.kot_trip.base.Utils
 import com.example.kot_trip.databinding.FragmentAddPostBinding
@@ -55,10 +56,10 @@ class AddPostFragment : Fragment() {
                 description = binding.addpostEditTextDescription.text.toString(),
                 city = binding.addpostEditTextCity.text.toString(),
                 country = binding.addpostEditTextCountry.text.toString(),
+                userId = App.Globals.userId!!,
                 imageBitmap = Utils.getBitmapFromImageView(binding.addpostImageView)
             )
         }
-
         viewModel.status.observe(viewLifecycleOwner) { status ->
             status?.message?.let {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
