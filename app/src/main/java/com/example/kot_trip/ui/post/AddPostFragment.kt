@@ -7,10 +7,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.kot_trip.base.Countries
 import com.example.kot_trip.base.Utils
 import com.example.kot_trip.databinding.FragmentAddPostBinding
 
@@ -22,6 +24,7 @@ class AddPostFragment : Fragment() {
     private val viewModel: AddPostViewModel by viewModels()
 
     private var selectedImageUri: Uri? = null
+
 
     private val selectImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
@@ -40,6 +43,9 @@ class AddPostFragment : Fragment() {
         binding.addpostButtonSelectImage.setOnClickListener {
             selectImageLauncher.launch("image/*")
         }
+
+        val adapter = ArrayAdapter(binding.root.context, android.R.layout.simple_dropdown_item_1line, Countries.list)
+        binding.addpostEditTextCountry.setAdapter(adapter)
 
         binding.addpostButtonSubmit.setOnClickListener {
             Log.d("AddPostFragment", "onCreateView: submit clicked")

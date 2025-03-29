@@ -4,6 +4,7 @@ import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -14,7 +15,7 @@ import com.squareup.picasso.Picasso
 
 class PostAdapter(
     private val onEditClick: (Post) -> Unit,
-    private val onDeleteClick: (Post) -> Unit
+    private val onDeleteClick: (Post) -> Unit,
 ) : ListAdapter<Post, PostAdapter.PostViewHolder>(DIFF_CALLBACK) {
 
     companion object {
@@ -41,6 +42,7 @@ class PostAdapter(
             binding.textViewDescription.text = post.content
             binding.textViewCity.text = post.city
             binding.textViewCountry.text = post.country
+
             Picasso.get().load(post.imageUrl.toUri()).into(binding.imageViewPost)
             binding.buttonEdit.setOnClickListener { onEditClick(post) }
             binding.buttonDelete.setOnClickListener { onDeleteClick(post) }
