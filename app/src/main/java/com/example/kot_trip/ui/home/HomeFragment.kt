@@ -18,6 +18,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var adapter: PostAdapter
 
+    val countries = listOf(
+        "United States", "Canada", "Mexico", "United Kingdom", "Germany", "France",
+        "Italy", "Israel", "Spain", "Australia", "Japan", "China", "India", "Brazil", "South Africa"
+    )
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
