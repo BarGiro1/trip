@@ -23,7 +23,7 @@ class AddPostFragment : Fragment() {
         _binding = FragmentAddPostBinding.inflate(inflater, container, false)
 
         binding.addpostButtonSubmit.setOnClickListener {
-            viewModel.submitPost(
+            viewModel.addPost(
                 binding.addpostEditTextTitle.text.toString(),
                 binding.addpostEditTextDescription.text.toString(),
                 binding.addpostEditTextCity.text.toString(),

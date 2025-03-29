@@ -13,7 +13,7 @@ import androidx.room.*
 @Dao
 interface PostDao {
 
-    @Query("SELECT * FROM posts ORDER BY timestamp DESC")
+    @Query("SELECT * FROM posts ORDER BY createdAt DESC")
     fun getAllPosts(): LiveData<List<Post>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
