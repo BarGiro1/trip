@@ -15,8 +15,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
-
-
     <EditText
         android:id="@+id/addpost_editTextDescription"
         android:layout_width="0dp"
@@ -37,22 +35,44 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="12dp" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/addpost_editTextCountry"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Country"
+        android:hint="Choose Country"
         app:layout_constraintTop_toBottomOf="@id/addpost_editTextCity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="12dp" />
 
     <Button
+        android:id="@+id/addpost_buttonSelectImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Image"
+        app:layout_constraintTop_toBottomOf="@id/addpost_editTextCountry"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <ImageView
+        android:id="@+id/addpost_imageView"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/addpost_buttonSelectImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        android:contentDescription="Selected Image"/>
+
+    <Button
         android:id="@+id/addpost_buttonSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"
-        app:layout_constraintTop_toBottomOf="@id/addpost_editTextCountry"
+        app:layout_constraintTop_toBottomOf="@id/addpost_imageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp" />

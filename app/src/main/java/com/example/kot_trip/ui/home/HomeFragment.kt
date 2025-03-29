@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kot_trip.R
 import com.example.kot_trip.databinding.FragmentHomeBinding
+import com.example.kot_trip.model.Post
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -16,12 +18,20 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var adapter: PostAdapter
 
+    val countries = listOf(
+        "United States", "Canada", "Mexico", "United Kingdom", "Germany", "France",
+        "Italy", "Israel", "Spain", "Australia", "Japan", "China", "India", "Brazil", "South Africa"
+    )
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         _binding = FragmentHomeBinding.bind(view)
 
-        adapter = PostAdapter()
+        adapter = PostAdapter(
+            onEditClick = { post -> navigateToEditPost(post) },
+            onDeleteClick = { post -> deletePost(post) }
+        )
+
         binding.recyclerViewPosts.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewPosts.adapter = adapter
 
