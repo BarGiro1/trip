@@ -55,6 +55,8 @@ dependencies {
     implementation(libs.firebase.storage.ktx)
     implementation(libs.firebase.crashlytics.buildtools)
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.androidx.room.common)
+    implementation(libs.androidx.room.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -1,8 +1,7 @@
-package com.example.kot_trip.dao
+package com.example.kot_trip.data.remote
 
 
 import android.graphics.Bitmap
-import android.util.Log
 import com.example.kot_trip.model.Post
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
