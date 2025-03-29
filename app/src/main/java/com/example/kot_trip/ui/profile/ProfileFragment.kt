@@ -30,7 +30,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         viewModel.user.observe(viewLifecycleOwner) { user ->
             binding.tvUserName.text = user.name
             binding.tvUserEmail.text = user.email
-            binding.ivProfileImage.setImageURI(user.profileImageUri)
+            //binding.ivProfileImage.setImageURI(user.profileImageUri)
         }
 
         binding.btnUpdateProfile.setOnClickListener {
