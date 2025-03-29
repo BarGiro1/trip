@@ -64,4 +64,6 @@
             app:destination="@id/profileFragment" />
     </fragment>
 
+=======
+>>>>>>> posts2
 </navigation>

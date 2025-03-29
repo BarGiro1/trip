@@ -25,5 +25,6 @@ class MainActivity : AppCompatActivity() {
                 else -> android.view.View.VISIBLE
             }
         }
+        bottomNav.setupWithNavController(navController)
     }
 }

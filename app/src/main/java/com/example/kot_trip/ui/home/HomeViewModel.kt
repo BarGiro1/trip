@@ -16,4 +16,12 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     fun refreshPosts() {
         repository.fetchPostsFromFirebase()
     }
+
+    fun deletePost(post: Post) {
+        repository.deletePost(
+            post,
+            onSuccess = { refreshPosts() },
+            onFailure = { /* Handle error */ }
+        )
+    }
 }
