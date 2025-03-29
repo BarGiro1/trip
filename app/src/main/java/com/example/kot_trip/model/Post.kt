@@ -13,7 +13,7 @@ data class Post(
     val country: String,
     val city: String,
     val content: String,
-    val imageUrl: String,
+    var imageUrl: String,
     val userId: String,
     val createdAt: Long = System.currentTimeMillis()
 ): Parcelable {

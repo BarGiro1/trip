@@ -1,11 +1,12 @@
 package com.example.kot_trip.ui.post
 
 import android.app.Application
+import android.graphics.Bitmap
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.kot_trip.data.remote.FirebaseModel
+import com.example.kot_trip.base.Status
 import com.example.kot_trip.data.repository.PostRepository
 import com.example.kot_trip.model.Post
 import java.util.*
@@ -14,9 +15,8 @@ import java.util.*
 class AddPostViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = PostRepository(application)
-
-    private val _status = MutableLiveData<String?>()
-    val status: LiveData<String?> get() = _status
+    private val _status = MutableLiveData<Status?>()
+    val status: LiveData<Status?> get() = _status
 
     fun addPost(
         title: String,
@@ -24,10 +24,11 @@ class AddPostViewModel(application: Application) : AndroidViewModel(application)
         city: String,
         country: String,
         userId: String = "demo_user", // בשלב מאוחר - מ-FirebaseAuth
-        imageUrl: String = ""
+        imageBitmap: Bitmap?
     ) {
         if (title.isBlank() || description.isBlank() || city.isBlank() || country.isBlank()) {
-            _status.value = "יש למלא את כל השדות"
+            Log.d("AddPostViewModel", "addPost: missing fields")
+            _status.value = Status("יש למלא את כל השדות", isSuccess = false)
             return
         }
 
@@ -38,13 +39,29 @@ class AddPostViewModel(application: Application) : AndroidViewModel(application)
             content = description,
             city = city,
             country = country,
-            imageUrl = imageUrl
+            imageUrl = ""
         )
 
         repository.addPost(
             post,
-            onSuccess = { _status.postValue("הפוסט נוסף בהצלחה 🎉") },
-            onFailure = { e -> _status.postValue("שגיאה: ${e.message}") }
+            imageBitmap,
+            onSuccess = {
+                _status.postValue(Status("הפוסט נוסף בהצלחה", isSuccess = true))
+            },
+            onFailure = { e -> _status.postValue(Status(e.message ?: "שגיאה", isSuccess = false)) }
+        )
+    }
+
+    fun updatePost(
+        post: Post,
+        imageBitmap: Bitmap?
+    ) {
+        repository.updatePost(
+            post,
+            onSuccess = {
+                _status.postValue(Status("הפוסט עודכן בהצלחה", isSuccess = true))
+            },
+            onFailure = { e -> _status.postValue(Status(e.message ?: "שגיאה", isSuccess = false)) }
         )
     }
 

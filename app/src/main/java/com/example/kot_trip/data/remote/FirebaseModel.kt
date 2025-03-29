@@ -79,22 +79,4 @@ object FirebaseModel {
             }
             .addOnFailureListener { onFailure(it) }
     }
-
-    fun uploadImage(image: Bitmap, name: String, callback: (String?) -> Unit) {
-        val storageRef = storage.reference
-        val imageProfileRef = storageRef.child("images/$name.jpg")
-        val baos = ByteArrayOutputStream()
-        image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val data = baos.toByteArray()
-
-        val uploadTask = imageProfileRef.putBytes(data)
-        uploadTask
-            .addOnFailureListener { callback(null) }
-            .addOnSuccessListener { taskSnapshot ->
-                imageProfileRef.downloadUrl.addOnSuccessListener { uri ->
-                    callback(uri.toString())
-                }
-            }
-    }
-
 }
