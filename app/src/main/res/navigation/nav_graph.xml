@@ -8,7 +8,12 @@
         android:id="@+id/homeFragment"
         android:name="com.example.kot_trip.ui.home.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_edit"
+            app:destination="@id/editPostFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/addPostFragment"
@@ -27,5 +32,15 @@
         android:name="com.example.kot_trip.ui.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/editPostFragment"
+        android:name="com.example.kot_trip.ui.editpost.EditPostFragment"
+        android:label="Edit Post">
+
+        <argument
+            android:name="post"
+            app:argType="com.example.kot_trip.model.Post" />
+    </fragment>
 
 </navigation>
