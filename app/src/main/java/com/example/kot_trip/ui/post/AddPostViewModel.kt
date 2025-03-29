@@ -3,7 +3,7 @@ package com.example.kot_trip.ui.post
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.kot_trip.dao.FirebaseModel
+import com.example.kot_trip.data.remote.FirebaseModel
 import com.example.kot_trip.model.Post
 import java.util.*
 

@@ -1,12 +1,16 @@
 package com.example.kot_trip.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "posts")
 data class Post(
-    val id: String = "",
-    val userId: String = "",
-    val title: String = "",
-    val country: String = "",
-    val city: String = "",
-    val description: String = "",
-    val imageUrl: String = "",
-    val timestamp: Long = System.currentTimeMillis()
+    @PrimaryKey val id: String,
+    val title: String,
+    val country: String,
+    val city: String,
+    val content: String,
+    val imageUrl: String,
+    val userId: String,
+    val timestamp: Long
 )
