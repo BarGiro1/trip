@@ -10,6 +10,7 @@ import com.google.firebase.firestore.firestoreSettings
 import com.google.firebase.firestore.memoryCacheSettings
 import com.google.firebase.storage.storage
 import java.io.ByteArrayOutputStream
+import com.example.kot_trip.model.User
 
 object FirebaseModel {
     private val db = FirebaseFirestore.getInstance()
@@ -96,5 +97,118 @@ object FirebaseModel {
                 }
             }
     }
+    fun getUserById(userId: String, onSuccess: (User) -> Unit, onFailure: (Exception) -> Unit) {
+        db.collection("users")
+            .document(userId)
+            .get()
+            .addOnSuccessListener { document ->
+                val user = document.toObject(User::class.java)
+                if (user != null) {
+                    onSuccess(user)
+                } else {
+                    onFailure(Exception("User not found"))
+                }
+            }
+            .addOnFailureListener { onFailure(it) }
+    }
+    fun addUser(user: User, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        db.collection("users")
+            .document(user.id)
+            .set(user)
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { onFailure(it) }
+    }
+    fun loginUser(
+        email: String,
+        password: String,
+        onSuccess: (User) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        val auth = com.google.firebase.auth.FirebaseAuth.getInstance()
+
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnSuccessListener { authResult ->
+                val firebaseUser = authResult.user
+                if (firebaseUser != null) {
+                    val user = User(
+                        id = firebaseUser.uid,
+                        name = firebaseUser.displayName ?: "",
+                        email = firebaseUser.email ?: "",
+                        profileImageUrl = firebaseUser.photoUrl?.toString() ?: ""
+                    )
+                    onSuccess(user)
+                } else {
+                    onFailure(Exception("User is null"))
+                }
+            }
+            .addOnFailureListener { e ->
+                onFailure(e)
+            }
+    }
+    fun register(
+        email: String,
+        password: String,
+        name: String,
+        onSuccess: (User) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        val auth = com.google.firebase.auth.FirebaseAuth.getInstance()
+
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnSuccessListener { authResult ->
+                val firebaseUser = authResult.user
+                if (firebaseUser != null) {
+                    val user = User(
+                        id = firebaseUser.uid,
+                        name = name,
+                        email = email,
+                        profileImageUrl = ""
+                    )
+
+                    // שמירה בפיירסטור
+                    db.collection("users")
+                        .document(user.id)
+                        .set(user)
+                        .addOnSuccessListener {
+                            onSuccess(user)
+                        }
+                        .addOnFailureListener { onFailure(it) }
+
+                } else {
+                    onFailure(Exception("User is null"))
+                }
+            }
+            .addOnFailureListener { e ->
+                onFailure(e)
+            }
+    }
+
+    fun logoutUser(onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        val auth = com.google.firebase.auth.FirebaseAuth.getInstance()
+        auth.signOut()
+        onSuccess()
+    }
+    fun updateUser(
+        userId: String,
+        name: String,
+        email: String,
+        profileImageUrl: String,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        val user = User(
+            id = userId,
+            name = name,
+            email = email,
+            profileImageUrl = profileImageUrl
+        )
+
+        db.collection("users")
+            .document(userId)
+            .set(user)
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { onFailure(it) }
+    }
+
 
 }
