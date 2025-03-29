@@ -12,5 +12,5 @@ data class Post(
     val content: String,
     val imageUrl: String,
     val userId: String,
-    val timestamp: Long
+    val createdAt: Long = System.currentTimeMillis()
 )
