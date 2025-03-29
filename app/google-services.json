@@ -12,7 +12,20 @@
           "package_name": "com.example.kot_trip"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "357658193837-mbha7rnqav85qot76aaudvn3jkr8mtqh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kot_trip",
+            "certificate_hash": "cfb422b95d35f5c491619b9500bdb404bd081bfb"
+          }
+        },
+        {
+          "client_id": "357658193837-fe8pp68mv36ipc0khdpn63unq90jc7hj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBTVA9H3oMgcoX5pGi2-x3pxHL8hWhqRj0"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "357658193837-fe8pp68mv36ipc0khdpn63unq90jc7hj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
