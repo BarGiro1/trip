@@ -47,4 +47,23 @@ class PostRepository(context: Context) {
             }
         )
     }
+
+    fun updatePost(
+        post: Post,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        FirebaseModel.updatePost(
+            post,
+            onSuccess = {
+                CoroutineScope(Dispatchers.IO).launch {
+                    postDao.insert(post)
+                }
+                onSuccess()
+            },
+            onFailure = { e ->
+                onFailure(e)
+            }
+        )
+    }
 }
