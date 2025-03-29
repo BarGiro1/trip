@@ -1,67 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/loginFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp"
-    android:gravity="center"
     tools:context=".ui.auth.LoginFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="התחברות"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="24dp"/>
-
-
-
-    <EditText
-        android:id="@+id/etEmail"
+    <!-- רקע -->
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="אימייל"
-        android:inputType="textEmailAddress"
-        android:layout_marginBottom="16dp"/>
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/rectangle"
+        android:contentDescription="@null" />
 
-    <EditText
-        android:id="@+id/etPassword"
+    <!-- קופסה לבנה באמצע -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="סיסמה"
-        android:inputType="textPassword"
-        android:layout_marginBottom="24dp"/>
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="16dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_white_box"
+            android:padding="24dp"
+            android:elevation="4dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Let's Travel you in."
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_gravity="center"
+                android:layout_marginBottom="24dp" />
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="התחבר"
-        android:layout_marginBottom="8dp"/>
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email or Phone Number"
+                android:inputType="textEmailAddress"
+                android:background="@drawable/edit_text_background"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp"/>
 
-    <Button
-        android:id="@+id/btnToSignUp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="אין לך משתמש? הירשם כאן" />
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:background="@drawable/edit_text_background"
+                android:padding="12dp"
+                android:layout_marginBottom="8dp"/>
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/btnGoogleSignIn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp" />
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp" />
 
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sign In"
+                android:backgroundTint="#007f91"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="12dp"/>
 
-</LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="or sign in with"
+                android:textAlignment="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <!-- אייקוני התחברות -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="8dp">
+
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/btnGoogleSignIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <!-- כאן תוכלי להוסיף גם אייקוני פייסבוק ואפל, אם תרצי -->
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="I don't have an account?"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                android:layout_marginTop="12dp"
+                android:textColor="#555" />
+
+            <Button
+                android:id="@+id/btnToSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sign Up"
+                android:backgroundTint="#eeeeee"
+                android:textColor="#007f91"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

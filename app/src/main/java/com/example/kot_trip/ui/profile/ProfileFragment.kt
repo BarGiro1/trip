@@ -45,15 +45,19 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         // Fetch user data from ViewModel
         viewModel.getUserProfile().observe(viewLifecycleOwner, { user ->
             this.user = user
-            binding.editUsername.setText(user.name)
-            user.profileImageUrl?.let {
-                Picasso.get().load(it).into(binding.ivProfileImage)
-            }
+            binding.etUserName.setText(user.name)
+
+            Picasso.get().load(user.profileImageUrl).into(binding.ivProfileImage)
         })
+        viewModel.getUserProfile().observe(viewLifecycleOwner) { user ->
+            binding.etUserName.setText(user.name)
+            binding.tvUserEmail.text = user.email
+            //binding.ivProfileImage.setImageURI(user.profileImageUri)
+        }
 
         binding.btnUpdateProfile.setOnClickListener {
             val updatedUser = user.copy(
-                name = binding.editUsername.text.toString(),
+                name = binding.etUserName.text.toString(),
             )
             viewModel.updateUser(updatedUser, Utils.getBitmapFromImageView(binding.ivProfileImage))
         }

@@ -8,9 +8,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.kot_trip.base.App
 import com.example.kot_trip.base.Status
-import com.example.kot_trip.base.Utils
-import com.example.kot_trip.model.User
 import com.example.kot_trip.data.repository.UserRepository
+import com.example.kot_trip.model.User
 
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = UserRepository(application)
