@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">kot_trip</string>
+    <string name="signup_title">הרשמה</string>
+    <string name="profile_picture">תמונת פרופיל</string>
+    <string name="full_name">שם מלא</string>
+    <string name="email">אימייל</string>
+    <string name="password">סיסמה</string>
+    <string name="signup_button">הרשם עכשיו</string>
+    <string name="already_have_account">יש לך כבר משתמש? התחבר</string>
 </resources>
