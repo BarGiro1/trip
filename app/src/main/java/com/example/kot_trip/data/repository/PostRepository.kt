@@ -3,6 +3,7 @@ package com.example.kot_trip.data.repository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import android.graphics.Bitmap
+import com.example.kot_trip.base.App
 import com.example.kot_trip.data.CloudinaryModel
 import com.example.kot_trip.data.local.dao.PostDao
 import com.example.kot_trip.data.local.database.AppDatabaseInstance
@@ -17,10 +18,11 @@ class PostRepository(context: Context) {
     private val postDao: PostDao = AppDatabaseInstance.database.postDao()
     private val cloudinaryModel = CloudinaryModel()
 
-    fun getCachedPosts(): LiveData<List<Post>> = postDao.getAllPosts()
+    fun getCachedPosts(userId: String? = null): LiveData<List<Post>> = postDao.getAllPosts(userId)
 
-    fun fetchPostsFromFirebase() {
+    fun fetchPostsFromFirebase(userId: String? = null) {
         FirebaseModel.getAllPosts(
+            userId,
             onSuccess = { posts ->
                 CoroutineScope(Dispatchers.IO).launch {
                     postDao.insertAll(posts)

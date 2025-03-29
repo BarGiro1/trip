@@ -52,7 +52,15 @@ class EditPostFragment : Fragment(R.layout.fragment_add_post) {
             )
             viewModel.updatePost(updatedPost)
 
-            // Navigate back to HomeFragment
+
+        }
+
+        viewModel.status.observe(viewLifecycleOwner) { status ->
+           status?.message?.let {
+               Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+           }
+
+            // Navigate back
             findNavController().popBackStack()
         }
     }

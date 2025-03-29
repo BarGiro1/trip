@@ -22,10 +22,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
 
-        adapter = PostAdapter(
-            onEditClick = { post -> navigateToEditPost(post) },
-            onDeleteClick = { post -> deletePost(post) }
-        )
+        adapter = PostAdapter()
 
         binding.recyclerViewPosts.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewPosts.adapter = adapter
@@ -35,11 +32,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         viewModel.refreshPosts()
-    }
-
-    private fun navigateToEditPost(post: Post) {
-        val action = HomeFragmentDirections.actionHomeToEdit(post)
-        findNavController().navigate(action)
     }
 
     private fun deletePost(post: Post) {

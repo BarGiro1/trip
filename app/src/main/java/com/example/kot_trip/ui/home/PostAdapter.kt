@@ -15,8 +15,9 @@ import com.example.kot_trip.model.Post
 import com.squareup.picasso.Picasso
 
 class PostAdapter(
-    private val onEditClick: (Post) -> Unit,
-    private val onDeleteClick: (Post) -> Unit,
+    private val onEditClick: (Post) -> Unit = {},
+    private val onDeleteClick: (Post) -> Unit = {},
+    private val enableEdit: Boolean = false
 ) : ListAdapter<Post, PostAdapter.PostViewHolder>(DIFF_CALLBACK) {
 
     companion object {
@@ -28,7 +29,7 @@ class PostAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(binding)
+        return PostViewHolder(binding, enableEdit)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
@@ -36,7 +37,7 @@ class PostAdapter(
         holder.bind(post)
     }
 
-    inner class PostViewHolder(private val binding: ItemPostBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class PostViewHolder(private val binding: ItemPostBinding, private val enableEdit: Boolean) : RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
             Log.d("PostAdapter", "bind: $post")
             binding.textViewTitle.text = post.title
@@ -45,8 +46,14 @@ class PostAdapter(
             binding.textViewCountry.text = post.country
 
             Picasso.get().load(post.imageUrl.toUri()).into(binding.imageViewPost)
+
             binding.buttonEdit.setOnClickListener { onEditClick(post) }
             binding.buttonDelete.setOnClickListener { onDeleteClick(post) }
+
+            if (!enableEdit) {
+                binding.buttonEdit.visibility = RecyclerView.GONE
+                binding.buttonDelete.visibility = RecyclerView.GONE
+            }
         }
     }
 }

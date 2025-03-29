@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.cloudinary.api.exceptions.ApiException
 import com.example.kot_trip.R
+import com.example.kot_trip.base.App
 import com.example.kot_trip.data.remote.FirebaseModel
 import com.example.kot_trip.data.repository.UserRepository
 import com.example.kot_trip.databinding.FragmentLoginBinding
@@ -40,7 +41,7 @@ class LoginFragment : Fragment() {
             try {
                 val account = task.getResult(ApiException::class.java)!!
                 FirebaseModel.googleSignIn(account.idToken!!, onSuccess = { user ->
-                    findNavController().navigate(R.id.action_logInFragment_to_profileFragment)
+                    findNavController().navigate(R.id.action_signUpFragment_to_homeFragment)
                 }, onFailure = {
                     Toast.makeText(requireContext(), "Google sign in failed", Toast.LENGTH_SHORT).show()
                 })
@@ -59,6 +60,10 @@ class LoginFragment : Fragment() {
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
+
+        if (App().getUserId() != null) {
+            findNavController().navigate(R.id.homeFragment)
+        }
 
         googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
 

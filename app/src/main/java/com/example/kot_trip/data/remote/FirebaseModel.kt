@@ -38,7 +38,7 @@ object FirebaseModel {
                         id = firebaseUser.uid,
                         name = firebaseUser.displayName ?: "",
                         email = firebaseUser.email ?: "",
-                        profileImageUrl = firebaseUser.photoUrl?.toString() ?: ""
+                        profileImageUrl = firebaseUser.photoUrl?.toString()
                     )
                     onSuccess(user)
                 } else {
@@ -74,12 +74,17 @@ object FirebaseModel {
             .addOnFailureListener { onFailure(it) }
     }
 
-    fun getAllPosts(onSuccess: (List<Post>) -> Unit, onFailure: (Exception) -> Unit) {
+    fun getAllPosts(userId: String?, onSuccess: (List<Post>) -> Unit, onFailure: (Exception) -> Unit) {
         db.collection("posts")
             .get()
             .addOnSuccessListener { documents ->
                 val posts = documents.map { it.toObject(Post::class.java) }
-                onSuccess(posts)
+                if (userId != null) {
+                    val filteredPosts = posts.filter { it.userId == userId }
+                    onSuccess(filteredPosts)
+                } else {
+                    onSuccess(posts)
+                }
             }
             .addOnFailureListener { onFailure(it) }
     }
@@ -144,7 +149,7 @@ object FirebaseModel {
                         id = firebaseUser.uid,
                         name = firebaseUser.displayName ?: "",
                         email = firebaseUser.email ?: "",
-                        profileImageUrl = firebaseUser.photoUrl?.toString() ?: ""
+                        profileImageUrl = firebaseUser.photoUrl?.toString()
                     )
                     onSuccess(user)
                 } else {
@@ -199,22 +204,13 @@ object FirebaseModel {
         onSuccess()
     }
     fun updateUser(
-        userId: String,
-        name: String,
-        email: String,
-        profileImageUrl: String,
+        user: User,
         onSuccess: () -> Unit,
         onFailure: (Exception) -> Unit
     ) {
-        val user = User(
-            id = userId,
-            name = name,
-            email = email,
-            profileImageUrl = profileImageUrl
-        )
 
         db.collection("users")
-            .document(userId)
+            .document(user.id)
             .set(user)
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { onFailure(it) }

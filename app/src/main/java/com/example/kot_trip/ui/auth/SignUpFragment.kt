@@ -45,7 +45,7 @@ class SignUpFragment : Fragment() {
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener { result ->
                     val uid = result.user?.uid ?: return@addOnSuccessListener
-                    val user = User(id = uid, name = name, email = email, profileImageUrl = "")
+                    val user = User(id = uid, name = name, email = email, profileImageUrl = null)
 
                     userRepository.saveUser(
                         user,

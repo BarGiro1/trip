@@ -9,9 +9,6 @@
         android:name="com.example.kot_trip.ui.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_home_to_edit"
-            app:destination="@id/editPostFragment" />
     </fragment>
 
     <fragment
@@ -24,7 +21,12 @@
         android:id="@+id/savedFragment"
         android:name="com.example.kot_trip.ui.saved.SavedFragment"
         android:label="Saved"
-        tools:layout="@layout/fragment_saved" />
+        tools:layout="@layout/fragment_saved">
+        <action
+            android:id="@+id/action_home_to_edit"
+            app:destination="@id/editPostFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/profileFragment"

@@ -56,7 +56,7 @@ class AddPostFragment : Fragment() {
                 description = binding.addpostEditTextDescription.text.toString(),
                 city = binding.addpostEditTextCity.text.toString(),
                 country = binding.addpostEditTextCountry.text.toString(),
-                userId = App.Globals.userId!!,
+                userId = App().getUserId()!!,
                 imageBitmap = Utils.getBitmapFromImageView(binding.addpostImageView)
             )
         }
