@@ -75,6 +75,18 @@
                 android:text="Update Profile"
                 android:textColor="@android:color/white"
                 android:backgroundTint="#007f91" />
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:textColor="@android:color/white"
+                android:backgroundTint="#d32f2f"
+                android:layout_marginTop="12dp"
+                app:icon="@drawable/ic_logout"
+            app:iconTint="@android:color/white"
+            app:iconPadding="8dp"
+            app:iconGravity="textStart" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

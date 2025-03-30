@@ -33,6 +33,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             //binding.ivProfileImage.setImageURI(user.profileImageUri)
         }
 
+
         binding.btnUpdateProfile.setOnClickListener {
             // Implement profile update logic
         }
