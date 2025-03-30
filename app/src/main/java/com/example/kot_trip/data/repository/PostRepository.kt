@@ -19,6 +19,8 @@ class PostRepository(context: Context) {
     private val cloudinaryModel = CloudinaryModel()
 
     fun getCachedPosts(userId: String? = null): LiveData<List<Post>> = postDao.getAllPosts(userId)
+    fun getAllPostsFromCache(): LiveData<List<Post>> = postDao.getAllPostsAllUsers()
+
 
     fun fetchPostsFromFirebase(userId: String? = null) {
         FirebaseModel.getAllPosts(
@@ -86,6 +88,12 @@ class PostRepository(context: Context) {
             }
         )
     }
+    fun logoutCleanUp() {
+        kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
+            postDao.deleteAll()
+        }
+    }
+
 
     fun deletePost(
         post: Post,
@@ -105,4 +113,5 @@ class PostRepository(context: Context) {
             }
         )
     }
+
 }

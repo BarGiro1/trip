@@ -18,7 +18,7 @@ import com.example.kot_trip.model.Post
 import com.example.kot_trip.viewmodel.EditPostViewModel
 import com.squareup.picasso.Picasso
 
-class EditPostFragment : Fragment(R.layout.fragment_add_post) {
+class EditPostFragment : Fragment(R.layout.fragment_edit_post) {
 
     private var _binding: FragmentEditPostBinding? = null
     private val binding get() = _binding!!
@@ -53,7 +53,11 @@ class EditPostFragment : Fragment(R.layout.fragment_add_post) {
         binding.editpostEditTextDescription.setText(post.content)
         binding.editpostEditTextCity.setText(post.city)
         binding.editpostEditTextCountry.setText(post.country)
-        Picasso.get().load(post.imageUrl).into(binding.editpostImageView)
+        if(post.imageUrl.isNullOrEmpty()) {
+            binding.editpostImageView.setImageResource(R.drawable.ic_default_avatar)
+        } else {
+            Picasso.get().load(post.imageUrl).into(binding.editpostImageView)
+        }
 
         binding.editpostButtonUpdate.setOnClickListener {
             val updatedPost = post.copy(

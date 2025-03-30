@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kot_trip.R
+import com.example.kot_trip.base.App
 import com.example.kot_trip.databinding.FragmentHomeBinding
 import com.example.kot_trip.model.Post
 import com.example.kot_trip.ui.home.PostAdapter
@@ -24,6 +25,9 @@ class SavedFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
+
+        // ✅ מושך פוסטים של המשתמש הנוכחי בלבד
+        viewModel.loadPostsForUser(App().getUserId())
 
         adapter = PostAdapter(
             onEditClick = { post -> navigateToEditPost(post) },
@@ -45,9 +49,8 @@ class SavedFragment : Fragment(R.layout.fragment_home) {
                         it.city.contains(text.toString(), ignoreCase = true)
             })
         }
-
-        viewModel.refreshPosts()
     }
+
 
     private fun navigateToEditPost(post: Post) {
         val action = SavedFragmentDirections.actionHomeToEdit(post)

@@ -60,9 +60,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         binding.btnLogout.setOnClickListener {
-            App().setUserId(null)
+            val repo = com.example.kot_trip.data.repository.PostRepository(requireContext())
+            repo.logoutCleanUp()  // מוחק את הפוסטים המקומיים
+            com.example.kot_trip.base.App().setUserId(null)
             findNavController().navigate(R.id.loginFragment)
         }
+
 
         viewModel.status.observe(viewLifecycleOwner) { status ->
             status?.message?.let {

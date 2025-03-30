@@ -11,5 +11,10 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = PostRepository(application)
 
-    val allPosts: LiveData<List<Post>> = repository.getCachedPosts()
+    val allPosts: LiveData<List<Post>> = repository.getAllPostsFromCache()
+    fun refreshPosts() {
+        repository.fetchPostsFromFirebase()
+    }
+
+
 }

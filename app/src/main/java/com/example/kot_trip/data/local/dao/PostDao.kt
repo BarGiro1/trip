@@ -25,6 +25,11 @@ interface PostDao {
     @Delete
     suspend fun delete(post: Post)
 
+
+    @Query("SELECT * FROM posts ORDER BY createdAt DESC")
+    fun getAllPostsAllUsers(): LiveData<List<Post>>
+
     @Query("DELETE FROM posts")
-    suspend fun clearAll()
+    fun deleteAll()
+
 }
