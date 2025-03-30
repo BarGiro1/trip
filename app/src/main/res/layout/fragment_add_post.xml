@@ -65,15 +65,6 @@
                 android:backgroundTint="#007f91"
                 android:layout_marginBottom="12dp" />
 
-            <ImageView
-                android:id="@+id/addpost_imageView"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                android:layout_marginBottom="12dp"
-                android:visibility="gone"
-                android:contentDescription="Selected Image" />
-
             <Button
                 android:id="@+id/addpost_buttonSubmit"
                 android:layout_width="match_parent"
@@ -81,6 +72,15 @@
                 android:text="Submit"
                 android:backgroundTint="#007f91"
                 android:textColor="@android:color/white" />
+
+            <ImageView
+                android:id="@+id/addpost_imageView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:layout_marginBottom="12dp"
+                android:contentDescription="Selected Image" />
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

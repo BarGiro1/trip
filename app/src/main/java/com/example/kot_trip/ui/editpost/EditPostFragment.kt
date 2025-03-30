@@ -1,10 +1,12 @@
 package com.example.kot_trip.ui.editpost
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -14,16 +16,25 @@ import com.example.kot_trip.databinding.FragmentEditPostBinding
 
 import com.example.kot_trip.model.Post
 import com.example.kot_trip.viewmodel.EditPostViewModel
+import com.squareup.picasso.Picasso
 
 class EditPostFragment : Fragment(R.layout.fragment_add_post) {
 
     private var _binding: FragmentEditPostBinding? = null
     private val binding get() = _binding!!
     private val viewModel: EditPostViewModel by viewModels() // Initialize ViewModel
+    private var selectedImageUri: Uri? = null
 
     private val args: EditPostFragmentArgs by navArgs()
     private lateinit var post: Post
 
+    private val selectImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            selectedImageUri = it
+            binding.editpostImageView.setImageURI(it)
+            binding.editpostImageView.visibility = View.VISIBLE
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,6 +53,7 @@ class EditPostFragment : Fragment(R.layout.fragment_add_post) {
         binding.editpostEditTextDescription.setText(post.content)
         binding.editpostEditTextCity.setText(post.city)
         binding.editpostEditTextCountry.setText(post.country)
+        Picasso.get().load(post.imageUrl).into(binding.editpostImageView)
 
         binding.editpostButtonUpdate.setOnClickListener {
             val updatedPost = post.copy(
