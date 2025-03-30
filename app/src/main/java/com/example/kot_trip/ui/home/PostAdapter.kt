@@ -11,6 +11,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kot_trip.databinding.ItemPostBinding
 import com.example.kot_trip.model.Post
+import android.os.Handler
+import android.os.Looper
+import androidx.appcompat.app.AlertDialog
+import com.example.kot_trip.utils.GeminiHelper
+
 
 import com.squareup.picasso.Picasso
 
@@ -49,6 +54,17 @@ class PostAdapter(
 
             binding.buttonEdit.setOnClickListener { onEditClick(post) }
             binding.buttonDelete.setOnClickListener { onDeleteClick(post) }
+            binding.buttonAiTip.setOnClickListener {
+                GeminiHelper.fetchDailyTipForCountry(post.country) { tip ->
+                    Handler(Looper.getMainLooper()).post {
+                        AlertDialog.Builder(binding.root.context)
+                            .setTitle("טיפ ל-${post.country}")
+                            .setMessage(tip)
+                            .setPositiveButton("סגור", null)
+                            .show()
+                    }
+                }
+            }
 
             if (!enableEdit) {
                 binding.buttonEdit.visibility = RecyclerView.GONE
