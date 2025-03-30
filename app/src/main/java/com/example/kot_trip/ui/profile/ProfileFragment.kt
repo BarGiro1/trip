@@ -44,16 +44,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
 
         // Fetch user data from ViewModel
-        viewModel.getUserProfile().observe(viewLifecycleOwner, { user ->
+        viewModel.getUserProfile().observe(viewLifecycleOwner) { user ->
             this.user = user
             binding.etUserName.setText(user.name)
-
-            Picasso.get().load(user.profileImageUrl).into(binding.ivProfileImage)
-        })
-        viewModel.getUserProfile().observe(viewLifecycleOwner) { user ->
-            binding.etUserName.setText(user.name)
             binding.tvUserEmail.text = user.email
-            //binding.ivProfileImage.setImageURI(user.profileImageUri)
+            Picasso.get().load(user.profileImageUrl).into(binding.ivProfileImage)
         }
 
 

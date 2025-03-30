@@ -15,7 +15,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
         setContentView(R.layout.activity_main)
+        guardUserId()
+    }
 
+    fun guardUserId() {
         val navController = findNavController(R.id.nav_host_fragment)
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 

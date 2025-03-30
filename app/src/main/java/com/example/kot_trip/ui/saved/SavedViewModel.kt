@@ -2,6 +2,7 @@ package com.example.kot_trip.ui.saved
 
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.kot_trip.base.App
@@ -15,6 +16,7 @@ class SavedViewModel(application: Application) : AndroidViewModel(application) {
     val allPosts: LiveData<List<Post>> = repository.getCachedPosts(App().getUserId())
 
     fun refreshPosts() {
+        Log.d("SavedViewModel", "refreshPosts of user ${App().getUserId()}")
         repository.fetchPostsFromFirebase(App().getUserId())
     }
 

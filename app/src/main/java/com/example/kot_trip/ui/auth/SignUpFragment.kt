@@ -51,7 +51,7 @@ class SignUpFragment : Fragment() {
                         user,
                         onSuccess = {
                             Toast.makeText(requireContext(), "נרשמת בהצלחה", Toast.LENGTH_SHORT).show()
-                            findNavController().navigate(R.id.action_signUpFragment_to_homeFragment)
+                            findNavController().navigate(R.id.loginFragment)
                         },
                         onFailure = {
                             Toast.makeText(requireContext(), "שגיאה בשמירת המשתמש", Toast.LENGTH_SHORT).show()
