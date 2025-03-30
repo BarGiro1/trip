@@ -14,6 +14,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.example.kot_trip.R
+import com.example.kot_trip.base.App
 import com.example.kot_trip.base.Status
 import com.example.kot_trip.base.Utils
 import com.example.kot_trip.databinding.FragmentProfileBinding
@@ -55,11 +56,17 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             //binding.ivProfileImage.setImageURI(user.profileImageUri)
         }
 
+
         binding.btnUpdateProfile.setOnClickListener {
             val updatedUser = user.copy(
                 name = binding.etUserName.text.toString(),
             )
             viewModel.updateUser(updatedUser, Utils.getBitmapFromImageView(binding.ivProfileImage))
+        }
+
+        binding.btnLogout.setOnClickListener {
+            App().setUserId(null)
+            findNavController().navigate(R.id.loginFragment)
         }
 
         viewModel.status.observe(viewLifecycleOwner) { status ->

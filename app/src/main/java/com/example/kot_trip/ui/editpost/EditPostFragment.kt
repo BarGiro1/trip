@@ -38,17 +38,17 @@ class EditPostFragment : Fragment(R.layout.fragment_add_post) {
 
         post = args.post
 
-        binding.editTitle.setText(post.title)
-        binding.editDescription.setText(post.content)
-        binding.editCity.setText(post.city)
-        binding.editCountry.setText(post.country)
+        binding.editpostEditTextTitle.setText(post.title)
+        binding.editpostEditTextDescription.setText(post.content)
+        binding.editpostEditTextCity.setText(post.city)
+        binding.editpostEditTextCountry.setText(post.country)
 
-        binding.buttonUpdate.setOnClickListener {
+        binding.editpostButtonUpdate.setOnClickListener {
             val updatedPost = post.copy(
-                title = binding.editTitle.text.toString(),
-                content = binding.editDescription.text.toString(),
-                city = binding.editCity.text.toString(),
-                country = binding.editCountry.text.toString()
+                title = binding.editpostEditTextTitle.text.toString(),
+                content = binding.editpostEditTextDescription.text.toString(),
+                city = binding.editpostEditTextCity.text.toString(),
+                country = binding.editpostEditTextCountry.text.toString()
             )
             viewModel.updatePost(updatedPost)
 
