@@ -1,5 +1,6 @@
 [versions]
 agp = "8.8.0"
+converterGson = "2.9.0"
 firebaseBom = "33.7.0"
 firebaseBomVersion = "33.11.0"
 googleMaterial = "1.11.0"
@@ -27,11 +28,13 @@ roomKtx = "2.6.1"
 cloudinaryAndroid = "3.0.2"
 playServicesCastTv = "21.1.1"
 generativeai = "0.9.0"
+generativeaiVersion = "0.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompilerVersion" }
 cloudinary-android = { module = "com.cloudinary:cloudinary-android", version.ref = "cloudinaryAndroid" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-bom-v33110 = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBomVersion" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
@@ -54,6 +57,8 @@ material-v1110 = { module = "com.google.android.material:material", version.ref 
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
 play-services-cast-tv = { group = "com.google.android.gms", name = "play-services-cast-tv", version.ref = "playServicesCastTv" }
+generativeai = { group = "com.google.ai.client.generativeai", name = "generativeai", version.ref = "generativeaiVersion" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converterGson" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -20,21 +20,20 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
-
+            <Button
+                android:id="@+id/buttonAiTip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="מה המזג אוויר במדינה?"
+                android:backgroundTint="#007f91"
+                android:textColor="@android:color/white"
+                android:layout_marginTop="8dp"/>
             <TextView
                 android:id="@+id/textViewTitle"
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-            <Button
-                android:id="@+id/buttonAiTip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="טיפ AI"
-                android:backgroundTint="#007f91"
-                android:textColor="@android:color/white"
-                android:layout_marginTop="8dp"/>
 
 
             <TextView

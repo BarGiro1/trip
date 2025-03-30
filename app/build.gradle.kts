@@ -65,9 +65,12 @@ dependencies {
     implementation(libs.picasso)
     implementation(libs.material.v1110)
     implementation(libs.play.services.cast.tv)
+    implementation(libs.generativeai)
     kapt(libs.androidx.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
 }

@@ -1,5 +1,6 @@
 package com.example.kot_trip.ui.home
 
+import WeatherApi
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,11 +14,16 @@ import com.example.kot_trip.databinding.ItemPostBinding
 import com.example.kot_trip.model.Post
 import android.os.Handler
 import android.os.Looper
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.example.kot_trip.utils.GeminiHelper
+import com.example.kot_trip.api.RetrofitInstance
+import com.example.kot_trip.api.WeatherResponse
 
 
 import com.squareup.picasso.Picasso
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class PostAdapter(
     private val onEditClick: (Post) -> Unit = {},
@@ -55,15 +61,26 @@ class PostAdapter(
             binding.buttonEdit.setOnClickListener { onEditClick(post) }
             binding.buttonDelete.setOnClickListener { onDeleteClick(post) }
             binding.buttonAiTip.setOnClickListener {
-                GeminiHelper.fetchDailyTipForCountry(post.country) { tip ->
-                    Handler(Looper.getMainLooper()).post {
-                        AlertDialog.Builder(binding.root.context)
-                            .setTitle("טיפ ל-${post.country}")
-                            .setMessage(tip)
-                            .setPositiveButton("סגור", null)
-                            .show()
+                RetrofitInstance.api.getCurrentWeather(post.country, "fed0129887b577e65f1977b1defb46c7").enqueue(object :
+                    Callback<WeatherResponse> {
+                    override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
+                        if (response.isSuccessful) {
+                            val weatherResponse = response.body()
+                            Log.d("Weather", "onResponse: $weatherResponse")
+                            Toast.makeText(
+                                binding.root.context,
+                                "הטפמרטורה במדינה ${post.country} היא ${weatherResponse?.main?.temp}°C",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Log.e("Weather", "onResponse: ${response.errorBody()}")
+                        }
                     }
-                }
+
+                    override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
+                        Log.e("Weather", "onFailure: ${t.message}")
+                    }
+                })
             }
 
             if (!enableEdit) {
