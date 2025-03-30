@@ -24,7 +24,12 @@
         tools:layout="@layout/fragment_saved">
         <action
             android:id="@+id/action_home_to_edit"
-            app:destination="@id/editPostFragment" />
+            app:destination="@id/editPostFragment">
+
+            <argument
+                android:name="post"
+                app:argType="com.example.kot_trip.model.Post" />
+        </action>
 
     </fragment>
 
@@ -65,7 +70,4 @@
             android:id="@+id/action_logInFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
-
-=======
->>>>>>> posts2
 </navigation>
