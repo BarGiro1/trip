@@ -89,10 +89,11 @@ object FirebaseModel {
             .addOnFailureListener { onFailure(it) }
     }
 
-    fun getPostsByCountryOrCity(country: String, city: String, onSuccess: (List<Post>) -> Unit, onFailure: (Exception) -> Unit) {
+    fun searchPosts(query: String, onSuccess: (List<Post>) -> Unit, onFailure: (Exception) -> Unit) {
         db.collection("posts")
-            .whereEqualTo("country", country)
-            .whereEqualTo("city", city)
+            .whereArrayContains("title", query)
+            .whereArrayContains("country", query)
+            .whereArrayContains("city", query)
             .get()
             .addOnSuccessListener { documents ->
                 val posts = documents.map { it.toObject(Post::class.java) }

@@ -12,16 +12,4 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = PostRepository(application)
 
     val allPosts: LiveData<List<Post>> = repository.getCachedPosts()
-
-    fun refreshPosts(userId: String? = null) {
-        repository.fetchPostsFromFirebase(userId)
-    }
-
-    fun deletePost(post: Post) {
-        repository.deletePost(
-            post,
-            onSuccess = { refreshPosts() },
-            onFailure = { /* Handle error */ }
-        )
-    }
 }

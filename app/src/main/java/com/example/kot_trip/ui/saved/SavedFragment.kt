@@ -2,6 +2,7 @@ package com.example.kot_trip.ui.saved
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -35,6 +36,14 @@ class SavedFragment : Fragment(R.layout.fragment_home) {
 
         viewModel.allPosts.observe(viewLifecycleOwner) { posts ->
             adapter.submitList(posts)
+        }
+
+        binding.searchField.doOnTextChanged { text, start, before, count ->
+            adapter.submitList(viewModel.allPosts.value?.filter {
+                it.title.contains(text.toString(), ignoreCase = true) ||
+                        it.country.contains(text.toString(), ignoreCase = true) ||
+                        it.city.contains(text.toString(), ignoreCase = true)
+            })
         }
 
         viewModel.refreshPosts()
