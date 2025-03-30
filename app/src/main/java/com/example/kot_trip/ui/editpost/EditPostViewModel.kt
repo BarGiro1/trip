@@ -1,6 +1,7 @@
 package com.example.kot_trip.viewmodel
 
 import android.app.Application
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -15,9 +16,10 @@ class EditPostViewModel(application: Application) : AndroidViewModel(application
     val status: LiveData<Status?> get() = _status
 
 
-    fun updatePost(post: Post) {
+    fun updatePost(post: Post, imageBitmap: Bitmap?) {
         repository.updatePost(
             post,
+            imageBitmap,
             onSuccess = {
                 Log.d("EditPostViewModel", "Post updated successfully")
                 _status.postValue(Status("Post updated successfully", isSuccess = true))

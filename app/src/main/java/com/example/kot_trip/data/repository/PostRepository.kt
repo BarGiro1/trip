@@ -50,7 +50,7 @@ class PostRepository(context: Context) {
                         bitmap,
                         onSuccess = { imageUrl ->
                             post.imageUrl = imageUrl
-                            updatePost(post, onSuccess, onFailure)
+                            updatePost(post, null, onSuccess, onFailure)
                         },
                         onError = { e ->
                             onFailure(Exception(e))
@@ -72,12 +72,27 @@ class PostRepository(context: Context) {
 
     fun updatePost(
         post: Post,
+        imageBitmap: Bitmap?,
         onSuccess: () -> Unit,
         onFailure: (Exception) -> Unit
     ) {
         FirebaseModel.updatePost(
             post,
             onSuccess = {
+                imageBitmap?.let { bitmap ->
+                    cloudinaryModel.uploadBitmap(
+                        bitmap,
+                        onSuccess = { imageUrl ->
+                            post.imageUrl = imageUrl
+                            updatePost(post, null, onSuccess, onFailure)
+                        },
+                        onError = { e ->
+                            onFailure(Exception(e))
+                        }
+                    )
+                } ?: run {
+                    onSuccess()
+                }
                 CoroutineScope(Dispatchers.IO).launch {
                     postDao.insert(post)
                 }

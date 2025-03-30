@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.kot_trip.R
+import com.example.kot_trip.base.Utils
 import com.example.kot_trip.databinding.FragmentEditPostBinding
 
 import com.example.kot_trip.model.Post
@@ -66,7 +67,10 @@ class EditPostFragment : Fragment(R.layout.fragment_edit_post) {
                 city = binding.editpostEditTextCity.text.toString(),
                 country = binding.editpostEditTextCountry.text.toString()
             )
-            viewModel.updatePost(updatedPost)
+            viewModel.updatePost(
+                updatedPost,
+                Utils.getBitmapFromImageView(binding.editpostImageView)
+            )
 
 
         }
@@ -78,6 +82,11 @@ class EditPostFragment : Fragment(R.layout.fragment_edit_post) {
 
             // Navigate back
             findNavController().popBackStack()
+        }
+
+
+        binding.editpostButtonSelectImage.setOnClickListener {
+            selectImageLauncher.launch("image/*")
         }
     }
 

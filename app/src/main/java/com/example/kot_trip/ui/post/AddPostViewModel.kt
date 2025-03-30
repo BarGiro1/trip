@@ -53,19 +53,6 @@ class AddPostViewModel(application: Application) : AndroidViewModel(application)
         )
     }
 
-    fun updatePost(
-        post: Post,
-        imageBitmap: Bitmap?
-    ) {
-        repository.updatePost(
-            post,
-            onSuccess = {
-                _status.postValue(Status("הפוסט עודכן בהצלחה", isSuccess = true))
-            },
-            onFailure = { e -> _status.postValue(Status(e.message ?: "שגיאה", isSuccess = false)) }
-        )
-    }
-
     fun clearStatus() {
         _status.value = null
     }
