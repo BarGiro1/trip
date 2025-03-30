@@ -42,6 +42,7 @@ class AuthViewModel(private val repository: UserRepository) : ViewModel() {
             email = email,
             password = password,
             onSuccess = {
+                App().setUserId(it.id)
                 _signUpSuccess.postValue(true)
                 _loading.postValue(false)
             },

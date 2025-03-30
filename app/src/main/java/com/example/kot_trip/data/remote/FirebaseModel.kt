@@ -2,6 +2,7 @@ package com.example.kot_trip.data.remote
 
 
 import android.graphics.Bitmap
+import android.util.Log
 import com.example.kot_trip.model.Post
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -27,6 +28,7 @@ object FirebaseModel {
 
 
     fun googleSignIn(token: String, onSuccess: (User) -> Unit, onFailure: (Exception) -> Unit) {
+        Log.d("FirebaseModel", "Firebase googleSignIn")
         val credential = com.google.firebase.auth.GoogleAuthProvider.getCredential(token, null)
         val auth = com.google.firebase.auth.FirebaseAuth.getInstance()
 
@@ -40,7 +42,12 @@ object FirebaseModel {
                         email = firebaseUser.email ?: "",
                         profileImageUrl = firebaseUser.photoUrl?.toString()
                     )
-                    onSuccess(user)
+                    Log.d("FirebaseModel", "Firebase googleSignIn success: $user")
+                    addUser(user, onSuccess = {
+                        onSuccess(user)
+                    }, onFailure = {
+                        onFailure(it)
+                    })
                 } else {
                     onFailure(Exception("User is null"))
                 }
@@ -85,30 +92,6 @@ object FirebaseModel {
                 } else {
                     onSuccess(posts)
                 }
-            }
-            .addOnFailureListener { onFailure(it) }
-    }
-
-    fun searchPosts(query: String, onSuccess: (List<Post>) -> Unit, onFailure: (Exception) -> Unit) {
-        db.collection("posts")
-            .whereArrayContains("title", query)
-            .whereArrayContains("country", query)
-            .whereArrayContains("city", query)
-            .get()
-            .addOnSuccessListener { documents ->
-                val posts = documents.map { it.toObject(Post::class.java) }
-                onSuccess(posts)
-            }
-            .addOnFailureListener { onFailure(it) }
-    }
-
-    fun getPostsByUserId(userId: String, onSuccess: (List<Post>) -> Unit, onFailure: (Exception) -> Unit) {
-        db.collection("posts")
-            .whereEqualTo("userId", userId)
-            .get()
-            .addOnSuccessListener { documents ->
-                val posts = documents.map { it.toObject(Post::class.java) }
-                onSuccess(posts)
             }
             .addOnFailureListener { onFailure(it) }
     }

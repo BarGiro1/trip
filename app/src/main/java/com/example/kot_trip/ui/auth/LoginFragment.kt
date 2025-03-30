@@ -33,25 +33,6 @@ class LoginFragment : Fragment() {
 
     private lateinit var viewModel: AuthViewModel
 
-    private val googleSignInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        val data = result.data
-        Log.d("LoginFragment", "onActivityResult: $result")
-        if (result.resultCode == RESULT_OK && data != null) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                val account = task.getResult(ApiException::class.java)!!
-                FirebaseModel.googleSignIn(account.idToken!!, onSuccess = { user ->
-                    findNavController().navigate(R.id.action_signUpFragment_to_homeFragment)
-                }, onFailure = {
-                    Toast.makeText(requireContext(), "Google sign in failed", Toast.LENGTH_SHORT).show()
-                })
-            } catch (e: ApiException) {
-                Log.w("LoginFragment", "Google sign in failed", e)
-                Toast.makeText(requireContext(), "Google sign in failed", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,6 +41,8 @@ class LoginFragment : Fragment() {
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
+
+        googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
 
         if (App().getUserId() != null) {
             findNavController().navigate(R.id.homeFragment)
@@ -105,8 +88,6 @@ class LoginFragment : Fragment() {
             binding.btnLogin.isEnabled = !isLoading
         }
 
-
-
         return binding.root
     }
 
@@ -127,9 +108,51 @@ class LoginFragment : Fragment() {
         googleSignInLauncher.launch(signInIntent)
     }
 
+    private val googleSignInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        Log.d("LoginFragment", "onActivityResult: $result")
+      if (result.resultCode == RESULT_OK) {
+          val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+          try {
+              val account = task.getResult(ApiException::class.java)!!
+              Log.d("LoginFragment", "signInWithGoogle: ${account.idToken}")
+              FirebaseModel.googleSignIn(account.idToken!!, onSuccess = {
+                  user -> viewModel.loginUser(
+                        email = user.email,
+                        password = user.id
+                    ) { error ->
+                        Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+                    }},
+                  onFailure = {
+                  Toast.makeText(requireContext(), "Google sign in failed", Toast.LENGTH_SHORT).show()
+              })
+          } catch (e: ApiException) {
+              Log.w("LoginFragment", "Google sign in failed", e)
+              Toast.makeText(requireContext(), "Google sign in failed", Toast.LENGTH_SHORT).show()
+          }
+      }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 }
+
+/*
+  val data = result.data
+        Log.d("LoginFra gment", "onActivityResult: $result")
+        if (result.resultCode == RESULT_OK && data != null) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)!!
+                FirebaseModel.googleSignIn(account.idToken!!, onSuccess = { user ->
+                    findNavController().navigate(R.id.action_signUpFragment_to_homeFragment)
+                }, onFailure = {
+                    Toast.makeText(requireContext(), "Google sign in failed", Toast.LENGTH_SHORT).show()
+                })
+            } catch (e: ApiException) {
+                Log.w("LoginFragment", "Google sign in failed", e)
+                Toast.makeText(requireContext(), "Google sign in failed", Toast.LENGTH_SHORT).show()
+            }
+        }
+ */

@@ -51,26 +51,13 @@ class UserRepository(private val context: Context) {
         name: String,
         email: String,
         password: String,
-        onSuccess: () -> Unit,
+        onSuccess: (User) -> Unit,
         onFailure: (Exception) -> Unit
     ) {
         FirebaseModel.register(
             email = email,
             password = password,
             name = name,
-            onSuccess = { user ->
-                CoroutineScope(Dispatchers.IO).launch {
-                    userDao.insert(user)
-                }
-                onSuccess()
-            },
-            onFailure = { onFailure(it) }
-        )
-    }
-
-    fun getUserById(userId: String, onSuccess: (User) -> Unit, onFailure: (Exception) -> Unit) {
-        FirebaseModel.getUserById(
-            userId,
             onSuccess = { user ->
                 CoroutineScope(Dispatchers.IO).launch {
                     userDao.insert(user)
